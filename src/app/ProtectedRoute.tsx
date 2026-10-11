@@ -28,3 +28,4 @@ export function ProtectedRoute({ requiredRole }: ProtectedRouteProps) {
 
   return <Outlet />
 }
+

@@ -61,3 +61,4 @@ export const checkoutSchema = z.object({
   order_note: z.string().max(300).optional().or(z.literal('')),
 })
 export type CheckoutFormData = z.infer<typeof checkoutSchema>
+

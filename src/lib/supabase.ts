@@ -1,10 +1,18 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.placeholder'
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables. Copy .env.example to .env and fill in your values.')
+export const isSupabaseConfigured = Boolean(
+  import.meta.env.VITE_SUPABASE_URL && 
+  import.meta.env.VITE_SUPABASE_ANON_KEY &&
+  !import.meta.env.VITE_SUPABASE_URL.includes('placeholder')
+)
+
+if (!isSupabaseConfigured && typeof window !== 'undefined') {
+  console.warn(
+    '[MenuQR] Supabase credentials not fully configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file.'
+  )
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
@@ -23,3 +31,4 @@ export function getMenuUrl(slug: string): string {
   const base = import.meta.env.VITE_APP_URL || window.location.origin
   return `${base}/menu/${slug}`
 }
+

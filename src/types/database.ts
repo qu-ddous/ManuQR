@@ -58,3 +58,4 @@ export interface ProductWithCategory extends Product {
 export interface ShopWithOwner extends Shop {
   profiles?: Profile | null
 }
+
