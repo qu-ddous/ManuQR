@@ -116,7 +116,7 @@ export default function CategoriesPage() {
   }
 
   async function moveCategory(cat: Category, dir: 'up' | 'down') {
-    const idx = categories.findIndex((c) => c.id === cat.id)
+    const idx = categories.findIndex((c: Category) => c.id === cat.id)
     const swapIdx = dir === 'up' ? idx - 1 : idx + 1
     if (swapIdx < 0 || swapIdx >= categories.length) return
     const swap = categories[swapIdx]
@@ -159,7 +159,7 @@ export default function CategoriesPage() {
         </div>
       ) : (
         <div className="card divide-y divide-stone-100">
-          {categories.map((cat, idx) => (
+          {categories.map((cat: Category, idx: number) => (
             <div key={cat.id} className="flex items-center gap-3 px-4 py-3">
               <GripVertical className="h-4 w-4 text-stone-300 flex-shrink-0" />
 

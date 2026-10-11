@@ -42,7 +42,18 @@ export default function ShopPage() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting, isDirty },
-  } = useForm<ShopFormData>({ resolver: zodResolver(shopSchema) })
+  } = useForm<ShopFormData>({
+    resolver: zodResolver(shopSchema),
+    defaultValues: {
+      name: '',
+      slug: '',
+      description: '',
+      whatsapp_number: '',
+      address: '',
+      opening_hours: '',
+      currency_code: 'PKR',
+    },
+  })
 
   useEffect(() => {
     if (shop) {
@@ -146,7 +157,7 @@ export default function ShopPage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit((d) => saveMutation.mutate(d))} className="card p-6 space-y-5">
+      <form onSubmit={handleSubmit((d: ShopFormData) => saveMutation.mutate(d))} className="card p-6 space-y-5">
         {/* Logo */}
         <div>
           <label className="label">Logo (optional)</label>

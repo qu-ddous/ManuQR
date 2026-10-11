@@ -71,7 +71,7 @@ function ProductFormModal({ shopId, shopCurrency, categories, product, open, onC
     resolver: zodResolver(productSchema),
     defaultValues: product
       ? { name: product.name, description: product.description ?? '', price: product.price, category_id: product.category_id, is_available: product.is_available }
-      : { is_available: true },
+      : { name: '', description: '', price: 0, category_id: null, is_available: true },
   })
 
   useEffect(() => {
@@ -199,7 +199,7 @@ export default function MenuPage() {
   }
 
   async function moveProduct(p: Product, dir: 'up' | 'down') {
-    const idx = products.findIndex((x) => x.id === p.id)
+    const idx = products.findIndex((x: Product) => x.id === p.id)
     const swapIdx = dir === 'up' ? idx - 1 : idx + 1
     if (swapIdx < 0 || swapIdx >= products.length) return
     const swap = products[swapIdx]
@@ -235,7 +235,7 @@ export default function MenuPage() {
         </div>
       ) : (
         <div className="card divide-y divide-stone-100">
-          {products.map((product, idx) => {
+          {products.map((product: Product, idx: number) => {
             const imgUrl = getStorageUrl(product.image_url)
             return (
               <div key={product.id} className="flex items-center gap-3 px-4 py-3">

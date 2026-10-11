@@ -31,14 +31,14 @@ export const shopSchema = z.object({
     .or(z.literal('')),
   address: z.string().max(300).optional().or(z.literal('')),
   opening_hours: z.string().max(200).optional().or(z.literal('')),
-  currency_code: z.string().length(3).default('PKR'),
+  currency_code: z.string().length(3),
 })
 export type ShopFormData = z.infer<typeof shopSchema>
 
 // Category
 export const categorySchema = z.object({
   name: z.string().min(1, 'Category name is required').max(80),
-  is_visible: z.boolean().default(true),
+  is_visible: z.boolean(),
 })
 export type CategoryFormData = z.infer<typeof categorySchema>
 
@@ -51,7 +51,7 @@ export const productSchema = z.object({
     .positive('Price must be greater than 0')
     .multipleOf(0.01, 'Price can have at most 2 decimal places'),
   category_id: z.string().uuid().nullable().optional(),
-  is_available: z.boolean().default(true),
+  is_available: z.boolean(),
 })
 export type ProductFormData = z.infer<typeof productSchema>
 

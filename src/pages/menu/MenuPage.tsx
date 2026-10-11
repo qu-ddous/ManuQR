@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { ShoppingCart, Plus, Minus, Trash2, MessageCircle, X, MapPin, Clock, QrCode } from 'lucide-react'
 import { supabase, getStorageUrl } from '@/lib/supabase'
-import { useCartStore } from '@/features/cart/useCartStore'
+import { useCartStore, type CartItem } from '@/features/cart/useCartStore'
 import { formatPrice, buildWhatsAppLink, buildOrderMessage } from '@/lib/utils'
 import { Spinner } from '@/components/ui/Spinner'
 import type { Shop, Category, Product } from '@/types/database'
@@ -69,7 +69,7 @@ function CartDrawer({ shop, onClose }: CartDrawerProps) {
     }
     const message = buildOrderMessage({
       shopName: shop.name,
-      items: items.map((i) => ({ name: i.name, qty: i.qty, price: i.price, currency: shop.currency_code })),
+      items: items.map((i: CartItem) => ({ name: i.name, qty: i.qty, price: i.price, currency: shop.currency_code })),
       customerName: data.customer_name,
       note: data.order_note,
     })
@@ -96,7 +96,7 @@ function CartDrawer({ shop, onClose }: CartDrawerProps) {
           {items.length === 0 ? (
             <p className="text-center text-stone-400 text-sm mt-8">Your cart is empty.</p>
           ) : (
-            items.map((item) => (
+            items.map((item: CartItem) => (
               <div key={item.id} className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-lg overflow-hidden bg-stone-100 flex-shrink-0">
                   {item.image_url ? (
@@ -220,13 +220,13 @@ export default function PublicMenuPage() {
 
   // Filter products by active category
   const visibleCategories = categories
-  const uncategorizedProducts = products.filter((p) => !p.category_id)
+  const uncategorizedProducts = products.filter((p: Product) => !p.category_id)
 
   const getProductsByCategory = (catId: string) =>
-    products.filter((p) => p.category_id === catId)
+    products.filter((p: Product) => p.category_id === catId)
 
   const filteredCategories = activeCategory
-    ? visibleCategories.filter((c) => c.id === activeCategory)
+    ? visibleCategories.filter((c: Category) => c.id === activeCategory)
     : visibleCategories
 
   return (
@@ -290,7 +290,7 @@ export default function PublicMenuPage() {
               >
                 All
               </button>
-              {categories.map((cat) => (
+              {categories.map((cat: Category) => (
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id === activeCategory ? null : cat.id)}
@@ -316,21 +316,21 @@ export default function PublicMenuPage() {
           </div>
         )}
 
-        {filteredCategories.map((cat) => {
+        {filteredCategories.map((cat: Category) => {
           const catProducts = getProductsByCategory(cat.id)
           if (catProducts.length === 0) return null
           return (
             <div key={cat.id}>
               <h2 className="text-lg font-bold text-navy-800 mb-4">{cat.name}</h2>
               <div className="grid gap-4 sm:grid-cols-2">
-                {catProducts.map((product) => (
+                {catProducts.map((product: Product) => (
                   <ProductCard
                     key={product.id}
                     product={product}
                     currency={shop.currency_code}
-                    cartQty={items.find((i) => i.id === product.id)?.qty ?? 0}
+                    cartQty={items.find((i: CartItem) => i.id === product.id)?.qty ?? 0}
                     onAdd={() => handleAddItem(product)}
-                    onUpdateQty={(qty) => useCartStore.getState().updateQty(product.id, qty)}
+                    onUpdateQty={(qty: number) => useCartStore.getState().updateQty(product.id, qty)}
                   />
                 ))}
               </div>
@@ -343,14 +343,14 @@ export default function PublicMenuPage() {
           <div>
             {categories.length > 0 && <h2 className="text-lg font-bold text-navy-800 mb-4">Other</h2>}
             <div className="grid gap-4 sm:grid-cols-2">
-              {uncategorizedProducts.map((product) => (
+              {uncategorizedProducts.map((product: Product) => (
                 <ProductCard
                   key={product.id}
                   product={product}
                   currency={shop.currency_code}
-                  cartQty={items.find((i) => i.id === product.id)?.qty ?? 0}
+                  cartQty={items.find((i: CartItem) => i.id === product.id)?.qty ?? 0}
                   onAdd={() => handleAddItem(product)}
-                  onUpdateQty={(qty) => useCartStore.getState().updateQty(product.id, qty)}
+                  onUpdateQty={(qty: number) => useCartStore.getState().updateQty(product.id, qty)}
                 />
               ))}
             </div>

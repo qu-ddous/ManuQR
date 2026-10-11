@@ -35,7 +35,7 @@ const features = [
   {
     icon: BarChart2,
     title: 'Easy Management',
-    desc: 'Add, edit, hide, or reorder items in seconds. Even if you've never built a website, you'll figure it out in minutes.',
+    desc: "Add, edit, hide, or reorder items in seconds. Even if you've never built a website, you'll figure it out in minutes.",
   },
   {
     icon: ShieldCheck,
@@ -82,7 +82,7 @@ const faqs = [
   },
   {
     q: 'What happens after I register?',
-    a: 'After registering and creating your shop, it will be reviewed by our team. You'll be approved quickly and your QR-linked menu will go live.',
+    a: "After registering and creating your shop, it will be reviewed by our team. You'll be approved quickly and your QR-linked menu will go live.",
   },
   {
     q: 'Is MenuQR available in Pakistan?',

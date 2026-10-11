@@ -38,7 +38,7 @@ export default function AdminShopsPage() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['adminShops'] }),
   })
 
-  const filtered = shops.filter((s) => {
+  const filtered = shops.filter((s: ShopWithOwner) => {
     const matchesSearch =
       s.name.toLowerCase().includes(search.toLowerCase()) ||
       s.slug.toLowerCase().includes(search.toLowerCase())
@@ -98,7 +98,7 @@ export default function AdminShopsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-stone-100">
-                {filtered.map((shop) => (
+                {filtered.map((shop: ShopWithOwner) => (
                   <tr key={shop.id} className="hover:bg-stone-50 transition-colors">
                     <td className="px-4 py-3">
                       <p className="font-medium text-navy-800">{shop.name}</p>
