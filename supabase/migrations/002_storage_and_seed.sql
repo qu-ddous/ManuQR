@@ -112,3 +112,4 @@ BEGIN
     (demo_shop_id, cat_drinks, 'Lotus Biscoff Shake', 'Rich vanilla gelato blended with Lotus spread and crushed biscuits', 450.00, true, 1);
 END $$;
 */
+
